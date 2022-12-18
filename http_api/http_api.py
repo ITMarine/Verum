@@ -11,7 +11,7 @@ async def queue_reverse_text(source_text=Body()) -> None:
     if source_text:
         connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
         channel = connection.channel()
-        channel.queue_declare(queue='reverse')
+        channel.queue_declare(queue='reverse', durable=True)
         channel.basic_publish(exchange='',
                               routing_key='reverse',
                               body=source_text)

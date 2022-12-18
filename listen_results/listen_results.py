@@ -2,7 +2,7 @@ import asyncio
 import websockets
 
 
-url = 'ws://localhost:8001/ws'
+url = 'ws://localhost:8001/listen_results'
 
 
 async def test():
