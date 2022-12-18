@@ -17,7 +17,7 @@ async def get_output():  #здесь буду забирать данные из
     return
 
 
-@app.websocket("/ws")
+@app.websocket("/listen_results")
 async def websocket_endpoint(websocket: WebSocket):
     path = "../unsent/unsent_queue"
     await websocket.accept()
