@@ -2,14 +2,16 @@ import asyncio
 import websockets
 
 
-url = 'ws://localhost:8001/listen_results'
+URL = 'ws://localhost:8001/listen_results'
 
 
-async def test():
-    async with websockets.connect(url) as websocket:
-        while True:
-            response = await websocket.recv()
-            print(response)
+async def listen():
+    try:
+        async with websockets.connect(URL, ping_interval=None) as websocket:
+            while True:
+                response = await websocket.recv()
+                print(response)
+    except asyncio.TimeoutError:
+        print("TimeoutError connecting")
 
-
-asyncio.run(test())
+asyncio.run(listen())

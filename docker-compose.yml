@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.11.5-management
+    hostname: rabbitmq
+    restart: always
+    ports:
+      - '55672:5672'
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    networks:
+      - docker-network
+
+  httpapi:
+    restart: always
+    hostname: httpapi
+    build:
+      context: ./http_api
+    networks:
+      - docker-network
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+    command: ["uvicorn", "http_api:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  worker:
+    restart: always
+    hostname: worker
+    build:
+      context: ./background_worker
+    networks:
+      - docker-network
+    volumes:
+      - ./storage/storage:/app/storage/storage
+      - ./unsent/unsent_queue:/app/unsent/unsent_queue
+    depends_on:
+      - rabbitmq
+    command: ["python3", "background_worker.py"]
+
+  websocketapi:
+    restart: always
+    hostname: websocketapi
+    build:
+      context: ./web_socket_api
+    networks:
+      - docker-network
+    ports:
+      - "8001:8001"
+    depends_on:
+      - worker
+    volumes:
+      - ./unsent/unsent_queue:/app/unsent/unsent_queue
+    command: ["uvicorn", "web_socket_api:app", "--host", "0.0.0.0", "--port", "8001"]
+
+networks:
+  docker-network:
+    driver: bridge

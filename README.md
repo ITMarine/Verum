@@ -1,6 +1,5 @@
 
-
-Задание можно залить на github
+## Задача
 
 Создать backend часть, состоящую из нескольких сервисов:
 1. Сервер очередей rabbitmq
@@ -28,3 +27,13 @@ web socket api c эндпоинтом /listen_results
 Например:
 1. ввели в командной строке: queue_reverse_text.py 123
 2. в командной строке listen_results.py появилось: input: 123, output: 321
+
+
+
+### Запуск
+
+```bash
+docker-compose up --build
+```
+
+
