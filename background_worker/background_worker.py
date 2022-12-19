@@ -1,23 +1,25 @@
 import pika
 import sys
 import os
+import time
 import collections
 
 collections.Callable = collections.abc.Callable
+
+STORAGE = "/app/storage/storage"
+UNSENT = "/app/unsent/unsent_queue"
 
 
 def main():
 
     def reverse_and_save(source_text):
         output_text = f"input: {source_text} output: {source_text[::-1]}\n"
-        storage = "../storage/storage"
-        unsent = "../unsent/unsent_queue"
-        with open(storage, 'a') as f:
+        with open(STORAGE, 'a') as f:
             f.write(output_text)
-        with open(unsent, 'a') as f:
+        with open(UNSENT, 'a') as f:
             f.write(output_text)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', port=5672))
     channel = connection.channel()
 
     channel.queue_declare(queue='reverse', durable=True)
@@ -34,6 +36,7 @@ def main():
 
 
 if __name__ == '__main__':
+    # time.sleep(9)
     try:
         main()
     except KeyboardInterrupt:
