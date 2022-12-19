@@ -30,10 +30,26 @@ web socket api c эндпоинтом /listen_results
 
 
 
-### Запуск
+### Запуск сервисов
 
 ```bash
 docker-compose up --build
 ```
 
+### Запуск скрипта на обработку
 
+```bash
+pip install -r requirements.txt
+```
+```bash
+python3 queue_reverse_text/queue_reverse_text.py
+```
+
+### Запуск скрипта на прослушивание результата
+
+```bash
+pip install -r requirements.txt
+```
+```bash
+python3 listen_results/listen_results.py
+```
