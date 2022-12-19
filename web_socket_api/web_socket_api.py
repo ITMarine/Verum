@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import FastAPI, WebSocket
 
 
@@ -6,7 +8,7 @@ app = FastAPI()
 UNSENT = "/app/unsent/unsent_queue"
 
 
-async def get_output_message():
+async def get_output_message() -> Union[str, None]:
     """extracts processed reversed message
     from file"""
     with open(UNSENT, 'r') as f:

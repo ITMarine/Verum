@@ -5,8 +5,8 @@ from fastapi import FastAPI, Body
 app = FastAPI()
 
 
-@app.post("/queue_reverse_text/")
-async def queue_reverse_text(source_text=Body()) -> None:
+@app.get("/queue_reverse_text")
+async def queue_reverse_text(source_text: str) -> str:
     """receives source text from queue_reverse_text.py
     then sends it into rabbitMQ queue"""
     if source_text:

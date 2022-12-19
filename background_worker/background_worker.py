@@ -12,7 +12,7 @@ UNSENT = "/app/unsent/unsent_queue"
 
 def main():
 
-    def reverse_and_save(source_text):
+    def reverse_and_save(source_text: str) -> None:
         """receives source text, reverse it then saves into
         the storage file and into the buffer file of websocket api"""
         output_text = f"input: {source_text} output: {source_text[::-1]}\n"
