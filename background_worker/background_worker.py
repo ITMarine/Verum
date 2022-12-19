@@ -21,22 +21,18 @@ def main():
 
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', port=5672))
     channel = connection.channel()
-
     channel.queue_declare(queue='reverse', durable=True)
 
     def callback(ch, method, properties, body):
         source_text = body.decode()
-        print(" [x] Received %r" % source_text)
         reverse_and_save(source_text)
 
     channel.basic_consume('reverse', callback, auto_ack=True)
-
-    print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
 
 
 if __name__ == '__main__':
-    # time.sleep(9)
+    time.sleep(9)
     try:
         main()
     except KeyboardInterrupt:
