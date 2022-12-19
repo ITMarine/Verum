@@ -7,6 +7,8 @@ UNSENT = "/app/unsent/unsent_queue"
 
 
 async def get_output_message():
+    """extracts processed reversed message
+    from file"""
     with open(UNSENT, 'r') as f:
         output_message = f.read()
         if output_message:
@@ -18,6 +20,7 @@ async def get_output_message():
 
 @app.websocket("/listen_results")
 async def websocket_endpoint(websocket: WebSocket):
+    """returns reversed message to the listen_result.py"""
     await websocket.accept()
     try:
         while True:
