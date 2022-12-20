@@ -1,4 +1,0 @@
-input: 123 output: 321
-input: 987654321 output: 123456789
-input: 987654321 output: 123456789
-input: 123 output: 321
